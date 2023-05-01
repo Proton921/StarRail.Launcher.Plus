@@ -1,0 +1,24 @@
+{
+  "name": "starrail.launcher.plus",
+  "version": "0.1.0",
+  "description": "An Electron-based Honkai:Star Rail launcher with advanced features.",
+  "keywords": [
+    "Electron",
+    "StarRail",
+    "Launcher"
+  ],
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Proton921",
+  "license": "MIT",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.1.1",
+    "electron": "^24.1.3"
+  },
+  "dependencies": {
+    "path": "^0.12.7",
+    "regedit": "^5.1.2"
+  }
+}
