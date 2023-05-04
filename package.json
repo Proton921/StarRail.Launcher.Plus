@@ -14,11 +14,10 @@
   "author": "Proton921",
   "license": "MIT",
   "devDependencies": {
-    "@electron-forge/cli": "^6.1.1",
-    "electron": "^24.1.3"
+    "electron": "^24.1.3",
+    "eslint": "^8.39.0"
   },
   "dependencies": {
-    "eslint": "latest",
     "path": "^0.12.7",
     "regedit": "^5.1.2"
   }
