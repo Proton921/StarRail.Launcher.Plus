@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const { app, BrowserWindow, Tray, Menu ,dialog, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs')
@@ -49,7 +48,7 @@ app.on("ready", () => {
         const result = readUserData(dataName)
         return result
       })
-    ipcMain.handle('input:writeFile', async (dataName,dataContent) =>{
+    ipcMain.handle('input:writeData', async (dataName,dataContent) =>{
         writeUserData(dataName,dataContent)
     })
 })

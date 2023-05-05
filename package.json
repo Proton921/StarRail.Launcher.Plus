@@ -7,7 +7,7 @@
     "StarRail",
     "Launcher"
   ],
-  "main": "main.js",
+  "main": "./src/main.js",
   "scripts": {
     "start": "electron ."
   },
