@@ -57,7 +57,7 @@ app.on('window-all-closed', () => {
 })
 
 async function readUserData(name) {
-    const dataName = path.join(userDataPath, name)
+    const dataName = path.join(userDataPath, name.toString())
     let returnData
     fs.readFile(dataName, 'utf-8', (err, data) => {
         if (err.code === 'ENOENT') {
@@ -78,7 +78,7 @@ async function readUserData(name) {
 }
 
 async function writeUserData(name, content) {
-    const dataName = path.join(userDataPath, name)
+    const dataName = path.join(userDataPath, name.toString())
     fs.writeFile(dataName, content, 'utf-8', (error) => {
         if (error) { 
             console.error(error) 
