@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Tray, Menu ,dialog, ipcMain } = require('electron')
+const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
@@ -22,7 +22,7 @@ function createWindow() {
         mainWindow.show()
     })
 }
-function createTray() {
+function createTray() {  //托盘
     const tray = new Tray(path.join(__dirname, '/resources/images/icons/icon-64.ico'))
     tray.setToolTip('StarRail.Launcher.Plus')
     tray.setTitle('StarRail.Launcher.Plus')
@@ -43,56 +43,80 @@ function createTray() {
 app.on("ready", () => {
     createWindow()
     createTray()
+
     ipcMain.handle('dialog:openFile', handleFileOpen)
-    ipcMain.handle('output:readData', async (dataName) => {
+    // eslint-disable-next-line no-unused-vars
+    ipcMain.handle('output:readData', async (event, dataName) => {
         const result = readUserData(dataName)
         return result
-      })
-    ipcMain.handle('input:writeData', async (dataName,dataContent) =>{
-        writeUserData(dataName,dataContent)
     })
+    // eslint-disable-next-line no-unused-vars
+    ipcMain.handle('input:writeData', async (event, dataName, dataContent) => {
+        writeUserData(dataName, dataContent)
+    })
+    // eslint-disable-next-line no-unused-vars
+    ipcMain.handle('check:isValid', async (event, filePath) => {
+        const result = isValid(filePath)
+        return result
+    })
+
 })
 app.on('window-all-closed', () => {
     app.quit()
 })
 
-async function readUserData(name) {
-    const dataName = path.join(userDataPath, name.toString())
-    let returnData
+async function readUserData(name = new String) {  //数据读取
+    const dataName = path.join(userDataPath, name)
+    let returnData = new String
     fs.readFile(dataName, 'utf-8', (err, data) => {
         if (err.code === 'ENOENT') {
             fs.writeFile(dataName, '', 'utf-8', (error) => {
                 if (error) {
                     console.error(error)
                 }
-                console.log(`Create file:${dataName}successfully.`)
+                else {
+                    console.log(`Create file:${dataName} successfully.`)
+                }
             })
         }
-        else { 
-            console.error(err) 
+        else if (err) {
+            console.error(err)
         }
-        returnData = data
+        else {
+            returnData = data
+            console.log(`Read file:${dataName} successfully.`)
+        }
+
     })
-    console.log(`Read file:${dataName}successfully.`)
     return returnData
 }
 
-async function writeUserData(name, content) {
-    const dataName = path.join(userDataPath, name.toString())
+async function writeUserData(name = new String, content = new String) {  //数据写入
+    const dataName = path.join(userDataPath, name)
     fs.writeFile(dataName, content, 'utf-8', (error) => {
-        if (error) { 
-            console.error(error) 
+        if (error) {
+            console.error(error)
         }
-        console.log(`Write file:${dataName}successfully.`);
+        else {
+            console.log(`Write file:${dataName} successfully.`)
+        }
     })
 }
 
 
-async function handleFileOpen() {
+async function handleFileOpen() {  //选取文件
     const { canceled, filePaths } = await dialog.showOpenDialog()
     if (canceled) {
-      return
+        return
     } else {
-      return filePaths[0]
+        return filePaths[0]
     }
+}
+
+async function isValid(filePath) { //判断文件是否存在
+    let result
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        err ? result = false : result = true
+    })
+    return result
 }
