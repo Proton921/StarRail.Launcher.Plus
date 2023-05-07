@@ -59,7 +59,21 @@ app.on("ready", () => {
         const result = isValid(filePath)
         return result
     })
-
+    // eslint-disable-next-line no-unused-vars
+    ipcMain.handle('init:createUserDataDir',async (event)=>{
+        fs.mkdir(userDataPath, (err) => {
+            if (err) {
+                console.error(err)
+            }
+            else {
+                console.log(`Create user data directory:${userDataPath} successfully.`)
+            }
+          })
+    })
+    // eslint-disable-next-line no-unused-vars
+    ipcMain.handle('output:getUserDataPath',async (event)=>{
+        return userDataPath
+    })
 })
 app.on('window-all-closed', () => {
     app.quit()
