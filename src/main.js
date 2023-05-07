@@ -2,7 +2,7 @@ const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
-const userDataPath = path.join(app.getPath('userData'),'UserData')
+const userDataPath = path.join(app.getPath('userData'), 'UserData')
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -60,7 +60,7 @@ app.on("ready", () => {
         return result
     })
     // eslint-disable-next-line no-unused-vars
-    ipcMain.handle('init:createUserDataDir',async (event)=>{
+    ipcMain.handle('init:createUserDataDir', async (event) => {
         fs.mkdir(userDataPath, (err) => {
             if (err) {
                 console.error(err)
@@ -68,10 +68,10 @@ app.on("ready", () => {
             else {
                 console.log(`Create user data directory:${userDataPath} successfully.`)
             }
-          })
+        })
     })
     // eslint-disable-next-line no-unused-vars
-    ipcMain.handle('output:getUserDataPath',async (event)=>{
+    ipcMain.handle('output:getUserDataPath', async (event) => {
         return userDataPath
     })
 })
