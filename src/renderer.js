@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 async function launchGame(){
     let gamePath
-    gamePath = window.electronAPI.readData('GamePath.txt')
+    gamePath = window.electronAPI.readData('GamePath.cfg')
     if (!(window.electronAPI.isValid(gamePath))){
         firstLaunchGame()
         return
@@ -10,5 +10,5 @@ async function launchGame(){
 }
 async function firstLaunchGame(){
     const gamePath = await window.electronAPI.openFile()
-    window.electronAPI.writeData('GamePath.txt',gamePath)
+    window.electronAPI.writeData('GamePath.cfg',gamePath)
 }

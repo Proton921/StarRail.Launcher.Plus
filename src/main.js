@@ -2,7 +2,7 @@ const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
-const userDataPath = app.getPath('userData')
+const userDataPath = path.join(app.getPath('userData'),'UserData')
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
