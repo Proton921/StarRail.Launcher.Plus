@@ -5,6 +5,4 @@ contextBridge.exposeInMainWorld('electronAPI', {
     writeData: (inputName, inputContent) => ipcRenderer.invoke('input:writeData', inputName, inputContent),
     openFile: () => ipcRenderer.invoke('dialog:openFile'),
     isValid: (filePath) => ipcRenderer.invoke('check:isValid', filePath),
-    createUserDataDir: () => ipcRenderer.invoke('init:createUserDataDir'),
-    userDataPath: () => ipcRenderer.invoke('output:getUserDataPath')
 })

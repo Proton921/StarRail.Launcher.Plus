@@ -1,20 +1,15 @@
 /* eslint-disable no-unused-vars */
 async function launchGame() {
-    let gamePath
-    gamePath = window.electronAPI.readData('GamePath.cfg')
-    if (!(window.electronAPI.isValid(gamePath))) {
-        initGamePath()
-        return
+    console.log('Click launch-game button.')
+    var readGamePath = await window.electronAPI.readData('GamePath.cfg')
+    var gamePath = new String(readGamePath)
+    console.log(`Game path:${gamePath} .`)
+    if ((gamePath == '')||(!(window.electronAPI.isValid(gamePath)))) {
+        console.log(`Game path is invalid,and it will be initialized.`)
+        readGamePath = await window.electronAPI.openFile()
+        gamePath = new String(readGamePath)
+        console.log(`New game path:${gamePath} .`)
+        window.electronAPI.writeData('GamePath.cfg',gamePath)
     }
     //To be continued.
-}
-async function initGamePath() {
-    initUserDataDir()
-    const gamePath = await window.electronAPI.openFile()
-    window.electronAPI.writeData('GamePath.cfg', gamePath)
-}
-async function initUserDataDir() {
-    if (!(window.electronAPI.isValid(window.electronAPI.userDataPath()))) {
-        window.electronAPI.createUserDataDir()
-    }
 }

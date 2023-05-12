@@ -2,7 +2,7 @@ const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
-const userDataPath = path.join(app.getPath('userData'), 'UserData')
+const userDataPath = path.join(app.getPath('userData'))
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -47,76 +47,71 @@ app.on("ready", () => {
     ipcMain.handle('dialog:openFile', handleFileOpen)
     // eslint-disable-next-line no-unused-vars
     ipcMain.handle('output:readData', async (event, dataName) => {
-        const result = readUserData(dataName)
+        const result = readData(dataName)
         return result
     })
     // eslint-disable-next-line no-unused-vars
     ipcMain.handle('input:writeData', async (event, dataName, dataContent) => {
-        writeUserData(dataName, dataContent)
+        writeData(dataName, dataContent)
     })
     // eslint-disable-next-line no-unused-vars
     ipcMain.handle('check:isValid', async (event, filePath) => {
         const result = isValid(filePath)
         return result
     })
-    // eslint-disable-next-line no-unused-vars
-    ipcMain.handle('init:createUserDataDir', async (event) => {
-        fs.mkdir(userDataPath, (err) => {
-            if (err) {
-                console.error(err)
-            }
-            else {
-                console.log(`Create user data directory:${userDataPath} successfully.`)
-            }
-        })
-    })
-    // eslint-disable-next-line no-unused-vars
-    ipcMain.handle('output:getUserDataPath', async (event) => {
-        return userDataPath
-    })
 })
 app.on('window-all-closed', () => {
     app.quit()
 })
 
-async function readUserData(name = new String) {  //数据读取
+function readData(name = new String) {  //数据读取
     const dataName = path.join(userDataPath, name)
-    let returnData = new String
-    fs.readFile(dataName, 'utf-8', (err, data) => {
-        if (err.code === 'ENOENT') {
-            fs.writeFile(dataName, '', 'utf-8', (error) => {
-                if (error) {
-                    console.error(error)
+    let returnData
+    try {
+        fs.readFile(dataName, 'utf-8', (err, data) => {
+            if (err) {
+                if (err.code === 'ENOENT') {
+                    try {
+                        fs.writeFile(dataName, '', 'utf-8', (error) => {
+                            if (error) {
+                                throw error
+                            }
+                            console.log(`Create file:${dataName} successfully.`)
+                        })
+                    }
+                    catch (error) {
+                        console.error(error)
+                    }
                 }
                 else {
-                    console.log(`Create file:${dataName} successfully.`)
+                    throw err
                 }
-            })
-        }
-        else if (err) {
-            console.error(err)
-        }
-        else {
+            }
             returnData = data
-            console.log(`Read file:${dataName} successfully.`)
-        }
-
-    })
+        })
+    }
+    catch (err) {
+        console.error(err)
+    }
+    console.log(`Read file:${dataName} successfully.Content:${returnData} .`)
     return returnData
 }
 
-async function writeUserData(name = new String, content = new String) {  //数据写入
+function writeData(name = new String, content = new String) {  //数据写入
     const dataName = path.join(userDataPath, name)
-    fs.writeFile(dataName, content, 'utf-8', (error) => {
-        if (error) {
-            console.error(error)
-        }
-        else {
+    content = JSON.stringify(content) 
+    try {
+        fs.writeFile(dataName, content, 'utf-8', (err) => {
+            if (err) {
+                throw err
+            }
             console.log(`Write file:${dataName} successfully.`)
-        }
-    })
+        })
+    }
+    catch (err) {
+        console.error(err)
+    }
 }
-
 
 async function handleFileOpen() {  //选取文件
     const { canceled, filePaths } = await dialog.showOpenDialog()
@@ -127,8 +122,12 @@ async function handleFileOpen() {  //选取文件
     }
 }
 
-async function isValid(filePath) { //判断文件是否存在
-    let result
+function isValid(filePath) { //判断文件是否存在
+    if (filePath == ''){
+        return false
+    }
+    let result = false
+    filePath = JSON.stringify(filePath) 
     fs.access(filePath, fs.constants.F_OK, (err) => {
         err ? result = false : result = true
     })
