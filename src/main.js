@@ -1,8 +1,8 @@
 const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require('electron')
 const path = require('path')
-const fs = require('fs')
-
-const userDataPath = path.join(app.getPath('userData'))
+const { access, constants } = require('fs')
+const Store = require('electron-store')
+const store = new Store()
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -46,90 +46,63 @@ app.on("ready", () => {
 
     ipcMain.handle('dialog:openFile', handleFileOpen)
     // eslint-disable-next-line no-unused-vars
-    ipcMain.handle('output:readData', async (event, dataName) => {
-        const result = readData(dataName)
-        return result
+    ipcMain.handle('output:getData', async (_event, dataName) => {
+        return result = getData(dataName)
     })
     // eslint-disable-next-line no-unused-vars
-    ipcMain.handle('input:writeData', async (event, dataName, dataContent) => {
-        writeData(dataName, dataContent)
+    ipcMain.handle('input:setData', async (_event, dataName, dataContent) => {
+        setData(dataName, dataContent)
     })
     // eslint-disable-next-line no-unused-vars
-    ipcMain.handle('check:isValid', async (event, filePath) => {
-        const result = isValid(filePath)
-        return result
+    ipcMain.handle('check:hasFile', async (_event, filePath) => {
+        return hasFile(filePath)
+    })
+    // eslint-disable-next-line no-unused-vars
+    ipcMain.handle('check:hasData', async (_event, dataName) => {
+        return hasData(dataName)
     })
 })
 app.on('window-all-closed', () => {
     app.quit()
 })
 
-function readData(name = new String) {  //数据读取
-    const dataName = path.join(userDataPath, name)
-    let returnData
-    try {
-        fs.readFile(dataName, 'utf-8', (err, data) => {
-            if (err) {
-                if (err.code === 'ENOENT') {
-                    try {
-                        fs.writeFile(dataName, '', 'utf-8', (error) => {
-                            if (error) {
-                                throw error
-                            }
-                            console.log(`Create file:${dataName} successfully.`)
-                        })
-                    }
-                    catch (error) {
-                        console.error(error)
-                    }
-                }
-                else {
-                    throw err
-                }
-            }
-            returnData = data
-        })
-    }
-    catch (err) {
-        console.error(err)
-    }
-    console.log(`Read file:${dataName} successfully.Content:${returnData} .`)
-    return returnData
+function getData(key) { //写入数据
+    key = JSON.stringify(key)
+    const value = store.get(key)
+    console.log(`Get data: ${key}:${value} .`)
+    return value
 }
 
-function writeData(name = new String, content = new String) {  //数据写入
-    const dataName = path.join(userDataPath, name)
-    content = JSON.stringify(content) 
-    try {
-        fs.writeFile(dataName, content, 'utf-8', (err) => {
-            if (err) {
-                throw err
-            }
-            console.log(`Write file:${dataName} successfully.`)
-        })
+function setData(key, value) { //读取数据
+    key = JSON.stringify(key)
+    value = JSON.stringify(value)
+    store.set(key, value)
+    console.log(`Set data: ${key}:${value}`)
+}
+
+function hasData(key) { //检测数据是否存在
+    key = JSON.stringify(key)
+    return store.has(key)
+}
+
+function hasFile(filePath) { //判断文件是否存在
+    if (filePath == '') {
+        return false
     }
-    catch (err) {
-        console.error(err)
-    }
+    let result = false
+    filePath = JSON.stringify(filePath)
+    access(filePath, constants.F_OK, (err) => {
+        err ? result = false : result = true
+    })
+    return result
 }
 
 async function handleFileOpen() {  //选取文件
     const { canceled, filePaths } = await dialog.showOpenDialog()
+    console.log(`Select file: ${filePaths[0]}`)
     if (canceled) {
         return
     } else {
         return filePaths[0]
     }
-}
-
-function isValid(filePath) { //判断文件是否存在
-    if (filePath == ''){
-        return false
-    }
-    let result = false
-    filePath = JSON.stringify(filePath) 
-    fs.access(filePath, fs.constants.F_OK, (err) => {
-        err ? result = false : result = true
-    })
-    return result
 }
