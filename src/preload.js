@@ -1,9 +1,17 @@
-const { contextBridge, ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer, IpcRendererEvent } = require('electron')
 
-contextBridge.exposeInMainWorld('electronAPI', {
-    getData: (outputName) => ipcRenderer.invoke('output:getData', outputName),
-    setData: (inputName, inputContent) => ipcRenderer.invoke('input:setData', inputName, inputContent),
-    openFile: () => ipcRenderer.invoke('dialog:openFile'),
-    hasFile: (filePath) => ipcRenderer.invoke('check:hasFile', filePath),
-    hasData: (key) => ipcRenderer.invoke('check:hasFile', key)
-})
+const electronHandler = {
+    ipcRenderer: {
+        setStoreValue: (key, value) => {
+            ipcRenderer.send("setStore", key, value)
+        },
+        getStoreValue(key) {
+            const resp = ipcRenderer.sendSync("getStore", key)
+            return resp
+        },
+        openFile: () => ipcRenderer.invoke('openFile'),
+        isValid: (filePath) => ipcRenderer.invoke('isValid', filePath),
+    }
+}
+
+contextBridge.exposeInMainWorld('electronAPI', electronHandler)
