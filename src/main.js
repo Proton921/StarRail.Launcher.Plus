@@ -1,6 +1,6 @@
 const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require('electron')
 const path = require('path')
-const { access, constants } = require('fs')
+const { accessSync, constants } = require('fs')
 const Store = require('electron-store')
 const store = new Store()
 
@@ -53,24 +53,26 @@ app.on('window-all-closed', () => {
 
 ipcMain.handle('openFile', async () => {
     const { canceled, filePaths } = await dialog.showOpenDialog()
-    if (canceled) {
-        return
-    } else {
+    if (!canceled) {
         return filePaths[0]
     }
 })
-ipcMain.on('getStore', (_, key) => {
-    let value = store.get(key)
-    _.returnValue = value || ""
+
+ipcMain.on('setData',(key,value)=>{
+    store.set(key,value)
 })
-ipcMain.on('setStore', (_, key, value) => {
-    store.set(key, value)
+
+ipcMain.handle('getData',(key)=>{
+    return store.get(key)
 })
-ipcMain.handle('isValid', (_, filePath) => {
-    let result = false
-    filePath = JSON.stringify(filePath)
-    access(filePath, constants.F_OK, (err) => {
-        err ? result = false : result = true
-    })
+
+ipcMain.handle('checkFile',(fileName)=>{
+    let result
+    try { 
+        accessSync(fileName, constants.F_OK)
+        result = true
+      } catch (err) { 
+        result = false 
+      } 
     return result
 })
