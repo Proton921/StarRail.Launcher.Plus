@@ -58,21 +58,21 @@ ipcMain.handle('openFile', async () => {
     }
 })
 
-ipcMain.on('setData',(key,value)=>{
-    store.set(key,value)
+ipcMain.on('setData', (_event, key, value) => {
+    store.set(key, value)
 })
 
-ipcMain.handle('getData',(key)=>{
-    return store.get(key)
+ipcMain.handle('getData', (_event, key) => {
+    return key
 })
 
-ipcMain.handle('checkFile',(fileName)=>{
+ipcMain.handle('checkFile', (_event, fileName) => {
     let result
-    try { 
+    try {
         accessSync(fileName, constants.F_OK)
         result = true
-      } catch (err) { 
-        result = false 
-      } 
+    } catch (err) {
+        result = false
+    }
     return result
 })
