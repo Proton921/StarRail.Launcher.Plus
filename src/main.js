@@ -1,6 +1,6 @@
 const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require('electron')
 const path = require('path')
-const { accessSync, constants } = require('fs')
+const { access, constants } = require('fs')
 const Store = require('electron-store')
 const store = new Store()
 const { spawn } = require('child_process')
@@ -69,15 +69,12 @@ ipcMain.handle('getData', (_event, key) => {
 
 ipcMain.handle('checkFile', (_event, fileName) => {
     let result
-    try {
-        accessSync(fileName, constants.F_OK)
-        result = true
-    } catch (err) {
-        result = false
-    }
+    access(fileName, constants.F_OK, (err) => {
+        err ? result = false : result = true
+    })
     return result
 })
 
-ipcMain.handle('runProcess',(_event,processPath)=>{
+ipcMain.handle('runProcess', (_event, processPath) => {
     spawn(processPath)
 })
