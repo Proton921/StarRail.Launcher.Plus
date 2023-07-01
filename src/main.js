@@ -3,6 +3,7 @@ const path = require('path')
 const { accessSync, constants } = require('fs')
 const Store = require('electron-store')
 const store = new Store()
+const { spawn } = require('child_process')
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -58,12 +59,12 @@ ipcMain.handle('openFile', async () => {
     }
 })
 
-ipcMain.on('setData', (_event, key, value) => {
+ipcMain.handle('setData', (_event, key, value) => {
     store.set(key, value)
 })
 
 ipcMain.handle('getData', (_event, key) => {
-    return key
+    return store.get(key)
 })
 
 ipcMain.handle('checkFile', (_event, fileName) => {
@@ -75,4 +76,8 @@ ipcMain.handle('checkFile', (_event, fileName) => {
         result = false
     }
     return result
+})
+
+ipcMain.handle('runProcess',(_event,processPath)=>{
+    spawn(processPath)
 })

@@ -1,20 +1,30 @@
 api = window.electronAPI
 
-async function launchGame() {
-    let gamePath = api.getData('gamePath')
-    if (gamePath == undefined) {
-        alert('游戏路径尚未设置！')
-        gamePath = initGamePath()
-    }
-    if (!(api.checkFile(gamePath))){
-        alert('游戏路径无效！')
-        gamePath = initGamePath()
-    }
+async function launchGame() { //单击“启动游戏”按钮时执行
+    const promise = new Promise(async (resolve, reject) => {
+        let gamePath = await api.getData('gamePath') //从main process获取游戏本体路径
+        if (gamePath == undefined) {
+            reject('游戏路径未设置！')
+        }
+        if (!(api.checkFile(gamePath))) {
+            reject('游戏路径无效!')
+        }
+        resolve(gamePath)
+    })
+    promise
+        .then((value) => { //路径有效
+            api.runProcess(value) //运行程序
+        })
+        .catch((err) => { //路径无效
+            alert(err) //弹出报错窗口
+            initGamePath()
+        })
 
 }
-
-async function initGamePath(){
-    let newGamePath = await api.openFile()
-    api.setData('gamePath') = newGamePath
-    return newGamePath
+async function initGamePath() { //初始化游戏路径
+    let newGamePath = await api.openFile() //弹出打开文件窗口
+    if (newGamePath == '') { //如果选择“Cancel”，直接退出函数体
+        return
+    }
+    api.setData('gamePath', newGamePath) //写入路径数据
 }
