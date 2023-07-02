@@ -5,6 +5,9 @@ const Store = require('electron-store')
 const store = new Store()
 const { spawn } = require('child_process')
 
+
+if (require('electron-squirrel-startup')) app.quit();
+
 function createWindow() {
     const mainWindow = new BrowserWindow({
         show: false,
