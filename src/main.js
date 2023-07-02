@@ -6,14 +6,14 @@ const store = new Store()
 const { spawn } = require('child_process')
 
 
-if (require('electron-squirrel-startup')) app.quit();
+if (require('electron-squirrel-startup')) app.quit()
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
         show: false,
         resizable: false,
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 675,
         backgroundColor: '#161619',
         icon: path.join(__dirname, '/resources/images/icons/icon-64.ico'),
         webPreferences: {

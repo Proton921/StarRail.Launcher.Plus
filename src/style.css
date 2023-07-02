@@ -1,3 +1,29 @@
-body{
+body {
     background-image: url("./resources/images/bg/default_v1.0.png");
+}
+
+#launch-game {
+    width: 250px;
+    height: 80px;
+    position: absolute;
+    bottom: 60px;
+    right: 65px;
+}
+
+#launch-game-btn {
+    border-radius: 6px;
+    width: 250px;
+    height: 80px;
+    font-size: 32px;
+    font-family: "Microsoft YaHei", sans-serif;
+    background-color: #ffc450;
+    color: #704a1d;
+}
+
+#launch-game-btn:hover{
+    background-color: #ffcc6c;
+}
+
+#launch-game-btn:active{
+    background-color: #ffbc3b;
 }
