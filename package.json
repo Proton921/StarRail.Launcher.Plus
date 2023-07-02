@@ -40,7 +40,7 @@
       "packagerConfig": {
         "name": "StarRail.Launcher.Plus",
         "appVersion": "0.1.0-alpha",
-        "icon": "./src/resources/icons/icon-64",
+        "icon": "./src/resources/icons/icon-256",
         "appCopyright": "Proton921(wzt1785827887@163.com)",
         "win32metadata": {
           "ProductName": "StarRail.Launcher.Plus Windows",
