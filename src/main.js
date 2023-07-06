@@ -1,10 +1,9 @@
 const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require('electron')
 const path = require('path')
 const { access, constants } = require('fs')
+const { spawn } = require('child_process')
 const Store = require('electron-store')
 const store = new Store()
-const { spawn } = require('child_process')
-
 
 if (require('electron-squirrel-startup')) app.quit()
 
@@ -18,7 +17,8 @@ function createWindow() {
         icon: path.join(__dirname, '/resources/images/icons/icon-64.ico'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
-            nodeItergration: true
+            nodeItergration: true,
+            contextIsolation: true
         }
     })
     mainWindow.loadFile(path.join(__dirname, 'index.html'))
@@ -62,22 +62,24 @@ ipcMain.handle('openFile', async () => {
     }
 })
 
-ipcMain.handle('setData', (_event, key, value) => {
-    store.set(key, value)
-})
-
-ipcMain.handle('getData', (_event, key) => {
-    return store.get(key)
-})
-
-ipcMain.handle('checkFile', (_event, fileName) => {
+ipcMain.handle('checkFile', (_event, filePath) => {
     let result
-    access(fileName, constants.F_OK, (err) => {
+    let newFilePath = String(decodeURIComponent(filePath))
+    access(newFilePath, constants.F_OK, (err) => {
         err ? result = false : result = true
     })
     return result
 })
 
-ipcMain.handle('runProcess', (_event, processPath) => {
-    spawn(processPath)
+ipcMain.on('runProcess', (_event, processPath) => {
+    let newProcessPath = String(decodeURIComponent(processPath))
+    spawn(newProcessPath)
+})
+
+ipcMain.handle('getData', (_event, val) => {
+    return store.get(val)
+})
+
+ipcMain.on('setData', async (_event, key, val) => {
+    store.set(key, val)
 })

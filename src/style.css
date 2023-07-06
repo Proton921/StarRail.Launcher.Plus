@@ -2,15 +2,10 @@ body {
     background-image: url("./resources/images/bg/default_v1.0.png");
 }
 
-#launch-game {
-    width: 250px;
-    height: 80px;
+#launch-game-btn {
     position: absolute;
     bottom: 60px;
     right: 65px;
-}
-
-#launch-game-btn {
     border-radius: 6px;
     width: 250px;
     height: 80px;
@@ -20,10 +15,10 @@ body {
     color: #704a1d;
 }
 
-#launch-game-btn:hover{
+#launch-game-btn:hover {
     background-color: #ffcc6c;
 }
 
-#launch-game-btn:active{
+#launch-game-btn:active {
     background-color: #ffbc3b;
 }
