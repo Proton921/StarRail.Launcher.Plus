@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require('electron')
 const path = require('path')
 const { access, constants } = require('fs')
-const { spawn } = require('child_process')
+const { exec } = require('child_process')
 const Store = require('electron-store')
 const store = new Store()
 
@@ -64,16 +64,21 @@ ipcMain.handle('openFile', async () => {
 
 ipcMain.handle('checkFile', (_event, filePath) => {
     let result
-    let newFilePath = String(decodeURIComponent(filePath))
-    access(newFilePath, constants.F_OK, (err) => {
+    access(filePath, constants.F_OK, (err) => {
         err ? result = false : result = true
     })
     return result
 })
 
 ipcMain.on('runProcess', (_event, processPath) => {
-    let newProcessPath = String(decodeURIComponent(processPath))
-    spawn(newProcessPath)
+    console.log('Run process: ',processPath)
+    exec(processPath,[],(err,stdout,stderr)=>{
+        if(err){
+            console.error(err)
+        }
+        console.log('stdout:',stdout)
+        console.log('stderr:',stderr,'\n')
+    })
 })
 
 ipcMain.handle('getData', (_event, val) => {
