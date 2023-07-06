@@ -6,9 +6,9 @@ body {
     position: absolute;
     bottom: 60px;
     right: 65px;
-    border-radius: 6px;
     width: 250px;
     height: 80px;
+    border-radius: 6px;
     font-size: 32px;
     font-family: "Microsoft YaHei", sans-serif;
     background-color: #ffc450;

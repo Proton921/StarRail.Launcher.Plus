@@ -71,13 +71,13 @@ ipcMain.handle('checkFile', (_event, filePath) => {
 })
 
 ipcMain.on('runProcess', (_event, processPath) => {
-    console.log('Run process: ',processPath)
-    exec(processPath,[],(err,stdout,stderr)=>{
-        if(err){
+    console.log('Run process: ', processPath)
+    exec(processPath, [], (err, stdout, stderr) => {
+        if (err) {
             console.error(err)
         }
-        console.log('stdout:',stdout)
-        console.log('stderr:',stderr,'\n')
+        console.log('stdout:', stdout)
+        console.log('stderr:', stderr, '\n')
     })
 })
 
