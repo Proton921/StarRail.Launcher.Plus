@@ -1,11 +1,13 @@
 body {
     background-image: url("./resources/images/bg/default_v1.0.png");
+    overflow: hidden;
 }
 
 #launch-game-btn {
+    display: block;
     position: absolute;
     bottom: 60px;
-    right: 65px;
+    right: 160px;
     width: 250px;
     height: 80px;
     border-radius: 6px;
@@ -21,4 +23,12 @@ body {
 
 #launch-game-btn:active {
     background-color: #ffbc3b;
+}
+
+#sidebar-container {
+    position: absolute;
+    right: 0px;
+    width: 95px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
 }

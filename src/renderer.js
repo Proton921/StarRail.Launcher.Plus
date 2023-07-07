@@ -14,7 +14,7 @@ async function launchGame() {                                                   
     })
     promise
         .then((value) => {                                                          //路径有效
-            api.runProcess(value)                                                   //运行程序
+            api.execCmd(value)                                                   //运行程序
         })
         .catch((err) => {                                                           //路径无效
             alert(err)                                                              //弹出报错窗口

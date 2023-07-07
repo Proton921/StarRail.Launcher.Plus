@@ -26,7 +26,7 @@ function createWindow() {
         mainWindow.show()
     })
 }
-
+ 
 function createTray() {  //托盘
     const tray = new Tray(path.join(__dirname, '/resources/images/icons/icon-64.ico'))
     tray.setToolTip('StarRail.Launcher.Plus')
@@ -70,9 +70,9 @@ ipcMain.handle('checkFile', (_event, filePath) => {
     return result
 })
 
-ipcMain.on('runProcess', (_event, processPath) => {
-    console.log('Run process: ', processPath)
-    exec(processPath, [], (err, stdout, stderr) => {
+ipcMain.on('execCmd', (_event, cmd) => {
+    console.log('Command: ', cmd)
+    exec(cmd, [], (err, stdout, stderr) => {
         if (err) {
             console.error(err)
         }
