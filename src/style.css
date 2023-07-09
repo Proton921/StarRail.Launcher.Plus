@@ -34,12 +34,17 @@ body {
 }
 
 .sidebar-icon {
-    width: 46px;
-    height: 46px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background-color: white;
     position: relative;
-    left: 22.5px;
+    left: 26.5px;
+}
+
+.sidebar-icon:hover {
+    border: 3px solid #ffd284;
+    left: 23.5px;
 }
 
 .sidebar-icon img {
@@ -47,22 +52,26 @@ body {
     height: 32px;
     border-radius: 50%;
     position: relative;
-    left: 7px;
-    top: 7px;
+    top: 5px;
+    left: 5px;
 }
 
 #mys-icon {
+    position: relative;
     top: 45px;
 }
 
 #wiki-icon {
+    position: relative;
     top: 90px;
 }
 
 #github-icon {
+    position: relative;
     top: 135px;
 }
 
 #settings-icon {
+    position: relative;
     top: 180px;
 }

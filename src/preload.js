@@ -2,8 +2,8 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
   openFile: () => ipcRenderer.invoke('openFile'),
-  checkFile: (fileName) => ipcRenderer.invoke('checkFile', JSON.stringify(fileName)),
-  execCmd: (cmd) => ipcRenderer.send('execCmd', JSON.stringify(cmd)),
+  checkFile: (fileName) => ipcRenderer.invoke('checkFile', fileName),
+  execCmd: (cmd) => ipcRenderer.send('execCmd', cmd),
   store: {
     get(key) {
       return ipcRenderer.invoke('getData', key)
