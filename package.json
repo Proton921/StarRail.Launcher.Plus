@@ -1,6 +1,6 @@
 {
   "name": "starrail.launcher.plus",
-  "version": "0.1.0-alpha",
+  "version": "0.2.0-alpha",
   "description": "An Electron-based Honkai:Star Rail launcher with advanced features.",
   "keywords": [
     "Electron",
@@ -40,7 +40,7 @@
     "forge": {
       "packagerConfig": {
         "name": "StarRail.Launcher.Plus",
-        "appVersion": "0.1.0-alpha",
+        "appVersion": "0.2.0-alpha",
         "icon": "./src/resources/images/icons/icon-256",
         "appCopyright": "Proton921(wzt1785827887@163.com)",
         "win32metadata": {
