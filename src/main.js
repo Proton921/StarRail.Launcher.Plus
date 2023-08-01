@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require('electron')
 const path = require('path')
 const { access, constants } = require('fs')
-const { exec } = require('child_process')
+const { exec, execFile } = require('child_process')
 const Store = require('electron-store')
 const store = new Store()
 
@@ -26,7 +26,7 @@ function createWindow() {
         mainWindow.show()
     })
 }
- 
+
 function createTray() {  //托盘
     const tray = new Tray(path.join(__dirname, '/resources/images/icons/icon-64.ico'))
     tray.setToolTip('StarRail.Launcher.Plus')
@@ -73,6 +73,17 @@ ipcMain.handle('checkFile', (_event, filePath) => {
 ipcMain.on('execCmd', (_event, cmd) => {
     console.log('Command: ', cmd)
     exec(cmd, [], (err, stdout, stderr) => {
+        if (err) {
+            console.error(err)
+        }
+        console.log('stdout:', stdout)
+        console.log('stderr:', stderr, '\n')
+    })
+})
+
+ipcMain.on('execFile', (_event, file) => {
+    console.log('Exec file: ', file)
+    execFile(file, [], (err, stdout, stderr) => {
         if (err) {
             console.error(err)
         }

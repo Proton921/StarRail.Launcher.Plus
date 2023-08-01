@@ -1,11 +1,10 @@
 const api = window.electronAPI
-const store = api.store
 
 const launchGameBtn = document.getElementById('launch-game-btn')
 launchGameBtn.addEventListener('click', launchGame)
 async function launchGame() {                                                       //单击“启动游戏”按钮时执行
     const promise = new Promise(async (resolve, reject) => {
-        let gamePath = await store.get('gamePath')                                  //从main process获取游戏本体路径
+        let gamePath = await api.store.get('gamePath')                                  //从main process获取游戏本体路径
         if (gamePath == undefined) {
             reject('游戏路径未设置！')
         }
@@ -16,7 +15,7 @@ async function launchGame() {                                                   
     })
     promise
         .then((value) => {                                                          //路径有效
-            api.execCmd(value)                                                      //运行程序
+            api.execFile(value)                                                      //运行程序
         })
         .catch((err) => {                                                           //路径无效
             alert(err)                                                              //弹出报错窗口
@@ -29,7 +28,7 @@ async function initGamePath() {                                                 
     if (newGamePath == '') {                                                        //如果选择“Cancel”，直接退出函数体
         return false
     }
-    store.set('gamePath', newGamePath)                                              //写入路径数据
+    api.store.set('gamePath', newGamePath)                                              //写入路径数据
 }
 
 const sideBar = {

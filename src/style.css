@@ -43,8 +43,7 @@ body {
 }
 
 .sidebar-icon:hover {
-    border: 3px solid #ffd284;
-    left: 23.5px;
+    outline: 3px solid #ffd284;
 }
 
 .sidebar-icon img {
