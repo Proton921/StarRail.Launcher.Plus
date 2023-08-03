@@ -12,7 +12,7 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "test": "electron ."
+    "test": "electron . --dev"
   },
   "author": "Proton921",
   "license": "MIT",
@@ -41,7 +41,7 @@
       "packagerConfig": {
         "name": "StarRail.Launcher.Plus",
         "appVersion": "0.2.0-alpha",
-        "icon": "./src/resources/images/icons/icon-256",
+        "icon": "./src/resources/images/icons/app/icon-256",
         "appCopyright": "Proton921(wzt1785827887@163.com)",
         "win32metadata": {
           "ProductName": "StarRail.Launcher.Plus Windows",

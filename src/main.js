@@ -7,14 +7,15 @@ const store = new Store()
 
 if (require('electron-squirrel-startup')) app.quit()
 
-function createWindow() {
+app.on("ready", () => {
     const mainWindow = new BrowserWindow({
+        //titleBarStyle: 'hidden',
         show: false,
         resizable: false,
-        width: 1200,
-        height: 675,
+        width: 1280,
+        height: 770,
         backgroundColor: '#161619',
-        icon: path.join(__dirname, '/resources/images/icons/icon-64.ico'),
+        icon: path.join(__dirname, '/resources/images/icons/app/icon-64.ico'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeItergration: true,
@@ -25,13 +26,10 @@ function createWindow() {
     mainWindow.once('ready-to-show', () => {
         mainWindow.show()
     })
-}
 
-function createTray() {  //托盘
-    const tray = new Tray(path.join(__dirname, '/resources/images/icons/icon-64.ico'))
+    const tray = new Tray(path.join(__dirname, '/resources/images/icons/app/icon-64.ico'))
     tray.setToolTip('StarRail.Launcher.Plus')
     tray.setTitle('StarRail.Launcher.Plus')
-
     tray.on('right-click', () => {
         const template = [
             {
@@ -44,11 +42,23 @@ function createTray() {  //托盘
         const menuConfig = Menu.buildFromTemplate(template)
         tray.popUpContextMenu(menuConfig)
     })
-}
 
-app.on("ready", () => {
-    createWindow()
-    createTray()
+    ipcMain.on('openSettings', () => {
+        const settingsWindow = new BrowserWindow({
+            //titleBarStyle: 'hidden',
+            parent: mainWindow,
+            backgroundColor: '#FFFFFF',
+            show: false,
+            resizable: false,
+            width: 800,
+            height: 450,
+            icon: path.join(__dirname, '/resources/images/icons/app/icon-64.ico')
+        })
+        settingsWindow.loadFile(path.join(__dirname, 'settings.html'))
+        settingsWindow.once('ready-to-show', () => {
+            settingsWindow.show()
+        })
+    })
 })
 
 app.on('window-all-closed', () => {

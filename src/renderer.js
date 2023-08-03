@@ -40,3 +40,4 @@ const sideBar = {
 sideBar.mys.addEventListener('click', function () { api.execCmd('start https://www.miyoushe.com/sr') })
 sideBar.wiki.addEventListener('click', function () { api.execCmd('start https://bbs.mihoyo.com/sr/wiki/') })
 sideBar.github.addEventListener('click', function () { api.execCmd('start https://github.com/Proton921/StarRail.Launcher.Plus') })
+sideBar.settings.addEventListener('click', function () { api.openSettings() })

@@ -1,18 +1,19 @@
 body {
-    background-image: url("./resources/images/bg/default_v1.0.png");
     overflow: hidden;
+    font-family: "Microsoft YaHei", sans-serif;
+    user-select: none;
 }
 
 #launch-game-btn {
     display: block;
     position: absolute;
-    bottom: 60px;
+    bottom: 100px;
     right: 160px;
     width: 250px;
     height: 80px;
     border-radius: 6px;
+    border-style: none;
     font-size: 32px;
-    font-family: "Microsoft YaHei", sans-serif;
     background-color: #ffc450;
     color: #704a1d;
 }
@@ -30,7 +31,7 @@ body {
     right: 0px;
     width: 95px;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .sidebar-icon {
@@ -73,4 +74,50 @@ body {
 #settings-icon {
     position: relative;
     top: 180px;
+}
+
+#main-container {
+    background-image: url("./resources/images/bg/default_v1.0.png");
+    width: 1280px;
+    height: 720px;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+}
+
+#topbar {
+    width: 1280px;
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#minimize-btn {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top:0px;
+    right: 65px;
+}
+
+#close-btn {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top:0px;
+    right: 18px;
+}
+
+#newtitle {
+    position: relative;
+    left: 15px;
+    color: white;
+}
+
+#version {
+    position: relative;
+    left: 24px;
+    color: #363636;
 }
