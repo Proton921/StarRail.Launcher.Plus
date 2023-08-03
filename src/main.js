@@ -43,6 +43,14 @@ app.on("ready", () => {
         tray.popUpContextMenu(menuConfig)
     })
 
+    ipcMain.on('closeWin', () => {
+        mainWindow = null
+    })
+
+    ipcMain.on('minimizeWin', () => {
+        mainWindow.minimize()
+    })
+
     ipcMain.on('openSettings', () => {
         const settingsWindow = new BrowserWindow({
             //titleBarStyle: 'hidden',
@@ -83,9 +91,7 @@ ipcMain.handle('checkFile', (_event, filePath) => {
 ipcMain.on('execCmd', (_event, cmd) => {
     console.log('Command: ', cmd)
     exec(cmd, [], (err, stdout, stderr) => {
-        if (err) {
-            console.error(err)
-        }
+        if (err) console.error(err)
         console.log('stdout:', stdout)
         console.log('stderr:', stderr, '\n')
     })
@@ -94,9 +100,7 @@ ipcMain.on('execCmd', (_event, cmd) => {
 ipcMain.on('execFile', (_event, file) => {
     console.log('Exec file: ', file)
     execFile(file, [], (err, stdout, stderr) => {
-        if (err) {
-            console.error(err)
-        }
+        if (err) console.error(err)
         console.log('stdout:', stdout)
         console.log('stderr:', stderr, '\n')
     })

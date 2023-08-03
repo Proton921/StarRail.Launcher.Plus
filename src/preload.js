@@ -6,6 +6,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   execCmd: (cmd) => ipcRenderer.send('execCmd', cmd),
   execFile: (file) => ipcRenderer.send('execFile', file),
   openSettings: () => ipcRenderer.send('openSettings'),
+  closeWin: () => ipcRenderer.send('closeWin'),
+  minimizeWin: () => ipcRenderer.send('minimizeWin'),
   store: {
     get(key) {
       return ipcRenderer.invoke('getData', key)
