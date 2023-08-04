@@ -13,8 +13,8 @@ app.on("ready", () => {
         show: false,
         resizable: false,
         width: 1280,
-        height: 770,
-        backgroundColor: '#161619',
+        height: 760,
+        backgroundColor: '#111018',
         icon: path.join(__dirname, '/resources/images/icons/app/icon-64.ico'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
@@ -44,7 +44,7 @@ app.on("ready", () => {
     })
 
     ipcMain.on('closeWin', () => {
-        mainWindow = null
+        app.quit()
     })
 
     ipcMain.on('minimizeWin', () => {

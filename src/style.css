@@ -26,6 +26,76 @@ body {
     background-color: #ffbc3b;
 }
 
+#topbar {
+    background-color: #141414;
+    width: 1280px;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.topbar-btn {
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+}
+
+.topbar-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+#newtitle {
+    position: absolute;
+    bottom: 2px;
+    left: 5px;
+    color: white;
+    font-size: 16px;
+    width: min-content;
+    height: 16px;
+    padding: 12px;
+}
+
+#version {
+    position: absolute;
+    bottom: 2px;
+    left: 185px;
+    color: #363636;
+    font-size: 15px;
+    width: min-content;
+    height: 15px;
+    padding: 12.5px;
+}
+
+#minimize-btn {
+    position: absolute;
+    top: 0px;
+    right: 45px;
+}
+
+#minimize-btn:hover {
+    background-color: #353535;
+}
+
+#minimize-btn:active {
+    background-color: #313131;
+}
+
+#close-btn {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+}
+
+#close-btn:hover {
+    background-color: #f55b31;
+}
+
+#close-btn:active {
+    background-color: #d8502b;
+}
+
 #sidebar-container {
     position: absolute;
     right: 0px;
@@ -34,7 +104,7 @@ body {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.sidebar-icon {
+.sidebar-btn {
     width: 42px;
     height: 42px;
     border-radius: 50%;
@@ -43,11 +113,11 @@ body {
     left: 26.5px;
 }
 
-.sidebar-icon:hover {
+.sidebar-btn:hover {
     outline: 3px solid #ffd284;
 }
 
-.sidebar-icon img {
+.sidebar-btn img {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -81,43 +151,6 @@ body {
     width: 1280px;
     height: 720px;
     position: absolute;
-    top: 50px;
+    top: 40px;
     left: 0px;
-}
-
-#topbar {
-    width: 1280px;
-    height: 50px;
-    line-height: 50px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
-#minimize-btn {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top:0px;
-    right: 65px;
-}
-
-#close-btn {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top:0px;
-    right: 18px;
-}
-
-#newtitle {
-    position: relative;
-    left: 15px;
-    color: white;
-}
-
-#version {
-    position: relative;
-    left: 24px;
-    color: #363636;
 }

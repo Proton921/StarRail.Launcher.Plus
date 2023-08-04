@@ -10,18 +10,30 @@
 
 <body>
     <div id="topbar">
-        <span id="newtitle">StarRail.Launcher.Plus</span>
-        <span id="version">0.3.0</span>
-        <div id="minimize-btn"><img src="./resources/images/icons/minimize.svg" width="20" height="20" alt="最小化" /></div>
-        <div id="close-btn"><img src="./resources/images/icons/close.svg" width="20" height="20" alt="关闭" /></div>
+        <div id="newtitle">StarRail.Launcher.Plus</div>
+        <div id="version">0.3.0</div>
+        <div class="topbar-btn" id="minimize-btn">
+            <img src="./resources/images/icons/minimize.svg" alt="最小化" />
+        </div>
+        <div class="topbar-btn" id="close-btn">
+            <img src="./resources/images/icons/close.svg" alt="关闭" />
+        </div>
     </div>
     <div id="main-container">
         <button type="button" id="launch-game-btn">开始游戏</button>
         <div id="sidebar-container">
-            <div class="sidebar-icon" id="mys-icon"><img src="./resources/images/icons/Mhybbs.png" alt="米游社" /></div>
-            <div class="sidebar-icon" id="wiki-icon"><img src="./resources/images/icons/Wiki.svg" alt="开拓者笔记" /></div>
-            <div class="sidebar-icon" id="github-icon"><img src="./resources/images/icons/Github.svg" alt="GitHub仓库" /></div>
-            <div class="sidebar-icon" id="settings-icon"><img src="./resources/images/icons/Settings.svg" alt="设置" /></div>
+            <div class="sidebar-btn" id="mys-icon">
+                <img src="./resources/images/icons/Mhybbs.png" alt="米游社" />
+            </div>
+            <div class="sidebar-btn" id="wiki-icon">
+                <img src="./resources/images/icons/Wiki.svg" alt="开拓者笔记" />
+            </div>
+            <div class="sidebar-btn" id="github-icon">
+                <img src="./resources/images/icons/Github.svg" alt="GitHub仓库" />
+            </div>
+            <div class="sidebar-btn" id="settings-icon">
+                <img src="./resources/images/icons/Settings.svg" alt="设置" />
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="./renderer.js"></script>
