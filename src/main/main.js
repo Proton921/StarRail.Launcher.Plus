@@ -15,19 +15,19 @@ app.on("ready", () => {
         width: 1280,
         height: 760,
         backgroundColor: '#111018',
-        icon: path.join(__dirname, '/icon/icon-64.ico'),
+        icon: path.join(__dirname, '../icons/icon-32.ico'),
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, './preload.js'),
             nodeItergration: true,
             contextIsolation: true
         }
     })
-    mainWindow.loadFile(path.join(__dirname, '/renderer/index/index.html'))
+    mainWindow.loadFile(path.join(__dirname, '../renderer/index/index.html'))
     mainWindow.once('ready-to-show', () => {
         mainWindow.show()
     })
 
-    const tray = new Tray(path.join(__dirname, '/icon/icon-64.ico'))
+    const tray = new Tray(path.join(__dirname, '../icons/icon-32.ico'))
     tray.setToolTip('StarRail.Launcher.Plus')
     tray.setTitle('StarRail.Launcher.Plus')
     tray.on('right-click', () => {
@@ -60,9 +60,9 @@ app.on("ready", () => {
             resizable: false,
             width: 800,
             height: 450,
-            icon: path.join(__dirname, '/icon/icon-64.ico')
+            icon: path.join(__dirname, '../icons/icon-64.ico')
         })
-        settingsWindow.loadFile(path.join(__dirname, '/renderer/settings/settings.html'))
+        settingsWindow.loadFile(path.join(__dirname, '../renderer/settings/settings.html'))
         settingsWindow.once('ready-to-show', () => {
             settingsWindow.show()
         })

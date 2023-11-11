@@ -3,3 +3,20 @@ body {
     user-select: none;
     background-color: white;
 }
+
+#newtitle {
+    position: absolute;
+    bottom: 2px;
+    left: 5px;
+    color: white;
+    font-size: 16px;
+    width: min-content;
+    height: 16px;
+    padding: 12px;
+}
+
+#close-btn {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+}

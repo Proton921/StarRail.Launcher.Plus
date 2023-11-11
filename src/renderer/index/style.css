@@ -147,7 +147,7 @@ body {
 }
 
 #main-container {
-    background-image: url("./resources/images/bg/default_v1.0.png");
+    background-image: url("../resources/images/bg/default_v1.0.png");
     width: 1280px;
     height: 720px;
     position: absolute;
